@@ -1,14 +1,18 @@
 import React from 'react';
 import Field from './Field';
 
-
-// What is your favourite color?
-// Red, blue, green, purple, yellow, magenta, hot-pink, etc.
-
-
 function AnswerDetails (props) {
+  // 1em is equal to the font size of the parent tag.
+  const style = {
+    borderLeft: 'medium solid black',
+    padding: '0 0.75em'
+  };
+
   return (
-    <div>
+    <div
+      className="AnswerDetails"
+      style={style}
+    >
       <p>{props.body}</p>
       <p>By {props.author_full_name}</p>
       <Field name="Created At" value={props.created_at} />
