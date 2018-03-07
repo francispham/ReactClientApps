@@ -22,11 +22,19 @@ function QuestionDetails (props) {
       <h2>{props.title}</h2>
       <p>{props.body}</p>
       <p>By {author.full_name}</p>
-      <p><strong>View Count:</strong> {props.view_count}</p>
-      <p><strong>Created At:</strong> {props.created_at}</p>
-      <p><strong>Updated At:</strong> {props.updated_at}</p>
+      <Field name="View Count" value={props.view_count} />
+      <Field name="Created At" value={props.created_at} />
+      <Field name="Updated At" value={props.updated_at} />
     </div>
   );
+}
+
+function Field (props) {
+  return (
+    <p>
+      <strong>{props.name}:</strong> <em>{props.value}</em>
+    </p>
+  )
 }
 
 // What is your favourite color?
@@ -34,12 +42,11 @@ function QuestionDetails (props) {
 
 
 function AnswerDetails (props) {
-  const {author = {}} = props;
   return (
     <div>
-      <p>{props.title}</p>
-      <p>By {author.full_name}</p>
-      <p><strong>Created At:</strong> {props.created_at}</p>
+      <p>{props.body}</p>
+      <p>By {props.author_full_name}</p>
+      <Field name="Created At" value={props.created_at} />
     </div>
     // <div></div>
     // You can't return multiple React elements at once.
@@ -49,9 +56,9 @@ function AnswerDetails (props) {
 }
 
 function QuestionShowPage () {
-// To pass props to React elements, set them with
-// "HTML attrbutes" inside JSX. Each attribute will
-// act as a property of the component's `props` object.
+  // To pass props to React elements, set them with
+  // "HTML attrbutes" inside JSX. Each attribute will
+  // act as a property of the component's `props` object.
   return (
     <main className="QuestionShowPage">
       <QuestionDetails
@@ -64,8 +71,8 @@ function QuestionShowPage () {
       />
       <h3>Answers</h3>
       <AnswerDetails
-        title="What is your favourite color?"
-        author={{full_name: "Jon Snow"}}
+        body="Blue... No, red!"
+        author_full_name="Jimmy"
         created_at={(new Date()).toString()}
       />
     </main>
@@ -92,27 +99,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 registerServiceWorker();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
