@@ -26,6 +26,7 @@ function ProductDetails (props) {
     <div>
       <h2>{title}</h2>
       <p>{description}</p>
+      <p>{price}</p>
       <p>By {full_name}</p>
       <p>{created_at}</p>
     </div>

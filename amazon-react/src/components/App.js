@@ -4,6 +4,7 @@ import ProductDetails from './ProductDetails';
 
 import ReviewDetails from './ReviewDetails';
 
+
 class App extends Component {
   render() {
     const product = {
@@ -16,13 +17,14 @@ class App extends Component {
       }
     }
     const review = {
-      rating: 5,
+      rating: 1,
       body: 'blablablalba',
       created_at: "2018/03/22",
       reviewer: {
         full_name: "Phong Pham"
       }
     }
+
     return (
       <div className="App">
         <ProductDetails {...product} />
@@ -37,6 +39,6 @@ class App extends Component {
       </div>
     );
   }
-}
+};
 
 export default App;

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import StarRating from './StarRating';
 
 function ReviewDetails (props) {
   // 1em is equal to the font size of the parent tag.
@@ -15,12 +15,15 @@ function ReviewDetails (props) {
     reviewer = {} } = props;
 
   const {full_name} = reviewer;
+
+
   return (
     <div
       className="ReviewDetails"
       style={style}
     >
       <p>Rating: {rating}</p>
+      <StarRating max={5} rating = {rating}/>
       <p>{body}</p>
       <p>{full_name}</p>
       <p>{created_at}</p>
