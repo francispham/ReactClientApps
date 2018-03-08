@@ -1,5 +1,6 @@
 import React from 'react';
 import StarRating from './StarRating';
+import ReviewList from './ReviewList'
 
 function ReviewDetails (props) {
   // 1em is equal to the font size of the parent tag.
