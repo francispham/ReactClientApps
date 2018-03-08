@@ -3,7 +3,8 @@ import AnswerDetails from './AnswerDetails';
 
 function AnswerList(props) {
   const {
-    answers = []
+    answers = [],
+    onAnswerDeleteClick = () => {}
   } = props;
 
   return (<ul className="AnswerList" style={{
@@ -22,7 +23,9 @@ function AnswerList(props) {
               as props to a react element
               */
         }
-        <AnswerDetails {...answer}/>
+        <AnswerDetails
+          {...answer}
+          onDeleteClick = {onAnswerDeleteClick}/>
       </li>))
     }
   </ul>)

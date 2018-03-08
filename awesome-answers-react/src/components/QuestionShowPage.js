@@ -27,12 +27,28 @@ class QuestionShowPage extends Component {
     this.state = {
       question: questionData
     };
-    this.delete = this.delete.bind(this)
+    this.delete = this.delete.bind(this);
+    this.deleteAnswer = this.deleteAnswer.bind(this);
   }
 
   delete() {
     this.setState({question: {}});
   }
+
+  deleteAnswer (answerId) {
+    const {question} = this.state;
+    const {answers} = question;
+
+    this.setState({
+      question: {
+        ...question,
+        // The order in which properties are spread or added to object
+        // affect priority. Last is more important.
+        answers: answers.filter(answer => answer.id !== answerId)
+      }
+    })
+  }
+
 
   render() {
     const {question} = this.state;
@@ -66,7 +82,10 @@ class QuestionShowPage extends Component {
       <QuestionDetails {...this.state.question}/>
       <button onClick={this.delete}>Delete</button>
       <h3>Answers</h3>
-      <AnswerList answers={question.answers}/>
+      <AnswerList
+        answers={question.answers}
+        onAnswerDeleteClick = {this.deleteAnswer}
+      />
     </main>)
   }
 }
