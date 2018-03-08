@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 // React is default import.
 // Component (which must import with {}) is named import.
 
@@ -14,33 +14,44 @@ import questionData from '../questionData';
 
 class QuestionShowPage extends Component {
 
-  constructor (props) {
-  // When class based component is first initialize, the
-  // `props` are passed to the constructor. When inside constructor
-  // and only when inside, you should use `props` without `this.`.
-  super(props);
-  // When overriding the Component's constructor, we must
-  // always use `super(props);` to call the constructor of
-  // the Component class. This configures our component such
-  // as setting the `props` on `this`.
+  constructor(props) {
+    // When class based component is first initialize, the
+    // `props` are passed to the constructor. When inside constructor
+    // and only when inside, you should use `props` without `this.`.
+    super(props);
+    // When overriding the Component's constructor, we must
+    // always use `super(props);` to call the constructor of
+    // the Component class. This configures our component such
+    // as setting the `props` on `this`.
 
-  this.state = {
-    question: questionData
-  };
-}
-  render () {
+    this.state = {
+      question: questionData
+    };
+    this.delete = this.delete.bind(this)
+  }
+
+  delete() {
+    this.setState({question: {}});
+  }
+
+  render() {
+    const {question} = this.state;
+
+    if (!question.id) {
+      return (<main className="QuestionShowPage" style={{
+          margin: '0 1rem'
+        }}>
+        <h2>Question doesn't exist!</h2>
+      </main>)
+    }
     // To pass props to React elements, set them with
     // "HTML attrbutes" inside JSX. Each attribute will
     // act as a property of the component's `props` object.
 
     // 1rem is == to the font-size of the root tag (<html> ...).
-    return (
-    <main
-      className="QuestionShowPage"
-      style={{
+    return (<main className="QuestionShowPage" style={{
         margin: '0 1rem'
-      }}
-    >
+      }}>
       {/* <QuestionDetails
         title="What is your favourite color?"
         body="Red, blue, yellow, magenta, hot-pink, etc."
@@ -49,14 +60,14 @@ class QuestionShowPage extends Component {
         created_at={(new Date()).toString()}
         updated_at={(new Date()).toString()}
       />
-      or: */}
+      or: */
+      }
 
-
-      <QuestionDetails {...this.state.question} />
-          <h3>Answers</h3>
-          <AnswerList answers={this.state.question.answers} />
-        </main>
-      )
+      <QuestionDetails {...this.state.question}/>
+      <button onClick={this.delete}>Delete</button>
+      <h3>Answers</h3>
+      <AnswerList answers={question.answers}/>
+    </main>)
   }
 }
 
