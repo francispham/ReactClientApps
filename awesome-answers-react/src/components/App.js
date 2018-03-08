@@ -1,7 +1,6 @@
 import React from 'react';
 import QuestionShowPage from './QuestionShowPage';
 import QuestionIndexPage from './QuestionIndexPage';
-
 // When building React applications, we create
 // a root component that is the ancestor to all the
 // components that we create. And, we render that

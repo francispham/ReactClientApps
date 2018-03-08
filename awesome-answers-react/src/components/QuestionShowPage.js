@@ -1,6 +1,8 @@
 import React from 'react';
 import QuestionDetails from './QuestionDetails';
 import AnswerDetails from './AnswerDetails';
+import AnswerList from './AnswerList';
+import questionData from '../questionData';
 
 function QuestionShowPage () {
   // To pass props to React elements, set them with
@@ -15,7 +17,7 @@ function QuestionShowPage () {
         margin: '0 1rem'
       }}
     >
-      <QuestionDetails
+      {/* <QuestionDetails
         title="What is your favourite color?"
         body="Red, blue, yellow, magenta, hot-pink, etc."
         author={{full_name: "Jon Snow"}}
@@ -23,12 +25,10 @@ function QuestionShowPage () {
         created_at={(new Date()).toString()}
         updated_at={(new Date()).toString()}
       />
+      or: */}
+      <QuestionDetails {...questionData} />
       <h3>Answers</h3>
-      <AnswerDetails
-        body="Blue... No, red!"
-        author_full_name="Jimmy"
-        created_at={(new Date()).toString()}
-      />
+      <AnswerList answers={questionData.answers} />
     </main>
   )
 }

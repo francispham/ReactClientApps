@@ -1,6 +1,7 @@
 import React from 'react';
-import questionsData from '../questionsData';
 import Field from './Field';
+import questionsData from '../questionsData';
+
 function QuestionIndexPage () {
   return (
     <main
@@ -12,9 +13,9 @@ function QuestionIndexPage () {
         {
           questionsData.map(
             question => (
-              <li>
+              <li key={question.id}>
                 <a href="">{question.title}</a>
-                <Field name ="Author" value={question.author.full_name} />
+                <Field name="Author" value={question.author.full_name} />
               </li>
             )
           )
