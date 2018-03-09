@@ -1,5 +1,6 @@
 import React from 'react';
 import Field from './Field';
+import QuestionForm from './QuestionForm';
 import questionsData from '../questionsData';
 
 // The React Component parent class is also available
@@ -20,6 +21,7 @@ class QuestionIndexPage extends React.Component {
     // creates new function that is copy of the function
     // where `this` is bound permanently.
     this.deleteQuestion = this.deleteQuestion.bind(this)
+    this.addQuestion = this.addQuestion.bind(this)
   }
 
   deleteQuestion(event) {
@@ -44,6 +46,17 @@ class QuestionIndexPage extends React.Component {
     // DO NOT DO IT! ð±
   }
 
+  addQuestion (newQuestion) {
+    const {questions} = this.state;
+
+    newQuestion.author = {full_name: 'Francis'}
+    this.setState({
+      questions: [
+        newQuestion,
+        ... questions
+      ]
+    })
+  }
   render() {
     const {questions} = this.state;
 
@@ -51,6 +64,12 @@ class QuestionIndexPage extends React.Component {
         margin: '0 1rem'
       }}>
       <h2>Questions</h2>
+
+      <QuestionForm
+        onSubmit = {this.addQuestion}
+      />
+
+
       <ul>
         {
           questions.map(question => (<li key={question.id}>
