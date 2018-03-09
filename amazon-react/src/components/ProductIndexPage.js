@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import productsData from '../data/products';
+import ProductForm from './ProductForm';
 
 class ProductIndexPage extends Component {
   constructor(props) {
@@ -7,10 +8,24 @@ class ProductIndexPage extends Component {
     this.state = {
       products: productsData
     };
+    this.addProduct = this.addProduct.bind(this)
   }
+
+  addProduct (newProduct) {
+    const {products} = this.state
+
+    newProduct.seller = {full_name: 'Francis Pham'}
+    this.setState({
+      products: [newProduct, ...products]
+    })
+  }
+
   render() {
     console.log(this.state.products);
     return (<div>
+      <ProductForm
+        onSubmit={this.addProduct}
+      />
       <h2>Products</h2>
       <ul className="products-list">
         {
