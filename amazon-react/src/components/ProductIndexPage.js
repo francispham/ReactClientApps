@@ -9,6 +9,7 @@ class ProductIndexPage extends Component {
       products: productsData
     };
     this.addProduct = this.addProduct.bind(this)
+    this.deleteProduct = this.deleteProduct.bind(this)
   }
 
   addProduct (newProduct) {
@@ -19,7 +20,12 @@ class ProductIndexPage extends Component {
       products: [newProduct, ...products]
     })
   }
+  deleteProduct (event) {
+    event.preventDefault();
+    console.log("This is it!");
+    console.log("this",this);
 
+  }
   render() {
     console.log(this.state.products);
     return (<div>
@@ -31,8 +37,9 @@ class ProductIndexPage extends Component {
         {
           this.state.products.map(product => {
             return (<li key={product.id}>
-              <a href="">{product.title}</a>
+              <a href="">{product.title}</a><br />
               <strong>Seller:</strong>{' '}
+
               {/*
                 The {' '} just ensures that there is a space put in the dom in
                 between the bolded `Seller:` and the italicized seller
@@ -40,6 +47,8 @@ class ProductIndexPage extends Component {
               */
               }
               <em>{product.seller.full_name}</em>
+              <button onClick = {this.deleteProduct}>Delete
+              </button>
             </li>);
           })
         }
