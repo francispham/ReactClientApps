@@ -16,23 +16,23 @@ class CurrentDateTime extends Component {
     // `this.state` is not location we can data about
     // our component. The data you should store in your
     // `this.state` should impact how your component is
-    // rendered which should a minimum amount of data.
+    // rendered which should be a minimum amount of data.
     // To store other kinds of information, you can use
-    // properties `this` as you would in a plain
+    // properties of `this` as you would in a plain
     // JS object (or class).
-    this.interval = setInterval (
+    this.intervalId = setInterval(
       () => {
-        this.setState({dataTime: new Date()})
+        this.setState({dateTime: new Date()})
       },
       1000
     )
   }
 
   componentWillUnmount () {
-   // Code inside of this will run just before
-   // the component is removed from the DOM.
-   clearInterval(this.intervalId);
-   this.intervalId = null;
+    // Code inside of this will run just before
+    // the component is removed from the DOM.
+    clearInterval(this.intervalId);
+    this.intervalId = null;
   }
 
   render () {
