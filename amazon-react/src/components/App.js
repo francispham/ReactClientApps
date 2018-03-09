@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import ProductDetails from './ProductDetails';
 
-import ReviewDetails from './ReviewDetails';
-
+import ReviewList from './ReviewList';
 
 class App extends Component {
   render() {
@@ -16,29 +15,33 @@ class App extends Component {
         full_name: "Francis Pham"
       }
     }
-    const review = {
-      rating: 1,
-      body: 'blablablalba',
-      created_at: "2018/03/22",
-      reviewer: {
-        full_name: "Phong Pham"
+    const reviews = [
+      {
+        body: 'I want to eat cats',
+        rating: 2,
+        created_at: '2018/03/24',
+        reviewer: {
+          full_name: 'Samantha CodeCore (no relation)'
+        }
+      },
+      {
+        body: 'This is a great product!!!',
+        rating: 4,
+        created_at: '2018/03/23',
+        reviewer: {
+          full_name: 'Erika CodeCore'
+        }
       }
-    }
+    ];
 
     return (
       <div className="App">
         <ProductDetails {...product} />
-        <p><strong>For Review:</strong></p>
-        <ReviewDetails {...review} />
-        {/* Is the same as:
-        <ProductDetails
-          title={product.title}
-          description={product.description}
-        '(and order infor)'
-        /> */}
+        <h2>Reviews</h2>
+        <ReviewList reviews={reviews} />
       </div>
     );
   }
-};
+}
 
 export default App;
