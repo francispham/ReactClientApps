@@ -10,7 +10,8 @@ class QuestionIndexPage extends React.Component {
     super(props)
 
     this.state = {
-      questions: []
+      questions: [],
+      loading: true
     }
 
     // When using a method as a callback, we must bind
@@ -29,10 +30,14 @@ class QuestionIndexPage extends React.Component {
       .all()
       .then(
         questions => {
-          this.setState({questions: questions})
+          this.setState({
+            questions: questions,
+            loading: false
+          });
         }
-      )
+      );
   }
+
 
   deleteQuestion(event) {
     const {currentTarget} = event
@@ -68,7 +73,19 @@ class QuestionIndexPage extends React.Component {
     })
   }
   render() {
-    const {questions} = this.state;
+    const {questions, loading} = this.state;
+
+    if (loading) {
+      return (
+        <main
+          className="QuestionIndexPage"
+          style={{margin: '0 1rem'}}
+        >
+          <h2>Questions</h2>
+          <h4>Loading...</h4>
+        </main>
+      )
+    }
 
     return (<main className="QuestionIndexPage" style={{
         margin: '0 1rem'

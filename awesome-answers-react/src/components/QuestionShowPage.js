@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Question} from '../lib/requests';
 // React is default import.
 // Component (which must import with {}) is named import.
 
@@ -25,11 +26,26 @@ class QuestionShowPage extends Component {
     // as setting the `props` on `this`.
 
     this.state = {
-      question: questionData
+      question: [],
+      loading: true
     };
     this.delete = this.delete.bind(this);
     this.deleteAnswer = this.deleteAnswer.bind(this);
   }
+
+  componentDidMount () {
+    Question
+      .one(239)
+      .then(
+        question => {
+          this.setState({
+            question: question,
+            loading: false
+          });
+        }
+      );
+  }
+
 
   delete() {
     this.setState({question: {}});
@@ -51,7 +67,18 @@ class QuestionShowPage extends Component {
 
 
   render() {
-    const {question} = this.state;
+    const {question, loading} = this.state;
+
+    if (loading) {
+      return (
+        <main
+          className="QuestionIndexPage"
+          style={{margin: '0 1rem'}}
+        >
+          <h2>Questions</h2>
+          <h4>Loading...</h4>
+        </main>)
+    }
 
     if (!question.id) {
       return (<main className="QuestionShowPage" style={{
