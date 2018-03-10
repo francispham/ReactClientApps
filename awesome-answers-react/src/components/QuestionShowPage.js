@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import {Question} from '../lib/requests';
+import React, { Component } from 'react';
 // React is default import.
 // Component (which must import with {}) is named import.
 
@@ -11,11 +10,10 @@ import {Question} from '../lib/requests';
 import QuestionDetails from './QuestionDetails';
 import AnswerDetails from './AnswerDetails';
 import AnswerList from './AnswerList';
-import questionData from '../questionData';
+import { Question } from '../lib/requests';
 
 class QuestionShowPage extends Component {
-
-  constructor(props) {
+  constructor (props) {
     // When class based component is first initialize, the
     // `props` are passed to the constructor. When inside constructor
     // and only when inside, you should use `props` without `this.`.
@@ -26,29 +24,33 @@ class QuestionShowPage extends Component {
     // as setting the `props` on `this`.
 
     this.state = {
-      question: [],
+      question: {},
       loading: true
     };
+
     this.delete = this.delete.bind(this);
     this.deleteAnswer = this.deleteAnswer.bind(this);
   }
 
   componentDidMount () {
+    const questionId = this.props.match.params.id;
+
     Question
-      .one(239)
+      .one(questionId)
       .then(
         question => {
           this.setState({
             question: question,
             loading: false
-          });
+          })
         }
-      );
+      )
   }
 
-
-  delete() {
-    this.setState({question: {}});
+  delete () {
+    this.setState({
+      question: {}
+    });
   }
 
   deleteAnswer (answerId) {
@@ -65,55 +67,59 @@ class QuestionShowPage extends Component {
     })
   }
 
-
-  render() {
-    const {question, loading} = this.state;
+  render () {
+    const { question, loading } = this.state;
 
     if (loading) {
       return (
         <main
-          className="QuestionIndexPage"
-          style={{margin: '0 1rem'}}
+          className="QuestionShowPage"
+          style={{
+            margin: '0 1rem'
+          }}
         >
-          <h2>Questions</h2>
           <h4>Loading...</h4>
-        </main>)
+        </main>
+      );
     }
 
     if (!question.id) {
-      return (<main className="QuestionShowPage" style={{
-          margin: '0 1rem'
-        }}>
-        <h2>Question doesn't exist!</h2>
-      </main>)
+      return (
+        <main
+          className="QuestionShowPage"
+          style={{
+            margin: '0 1rem'
+          }}
+        >
+          <h2>Question doesn't exist!</h2>
+        </main>
+      )
     }
     // To pass props to React elements, set them with
     // "HTML attrbutes" inside JSX. Each attribute will
     // act as a property of the component's `props` object.
 
     // 1rem is == to the font-size of the root tag (<html> ...).
-    return (<main className="QuestionShowPage" style={{
-        margin: '0 1rem'
-      }}>
-      {/* <QuestionDetails
-        title="What is your favourite color?"
-        body="Red, blue, yellow, magenta, hot-pink, etc."
-        author={{full_name: "Jon Snow"}}
-        view_count={123}
-        created_at={(new Date()).toString()}
-        updated_at={(new Date()).toString()}
-      />
-      or: */
-      }
-
-      <QuestionDetails {...this.state.question}/>
-      <button onClick={this.delete}>Delete</button>
-      <h3>Answers</h3>
-      <AnswerList
-        answers={question.answers}
-        onAnswerDeleteClick = {this.deleteAnswer}
-      />
-    </main>)
+    return (
+      <main
+        className="QuestionShowPage"
+        style={{
+          margin: '0 1rem'
+        }}
+        >
+          <QuestionDetails {...question} />
+          <button
+            onClick={this.delete}
+          >
+            Delete
+          </button>
+          <h3>Answers</h3>
+          <AnswerList
+            answers={question.answers}
+            onAnswerDeleteClick={this.deleteAnswer}
+          />
+        </main>
+      )
   }
 }
 
