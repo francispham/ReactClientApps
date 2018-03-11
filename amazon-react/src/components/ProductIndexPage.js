@@ -20,14 +20,20 @@ class ProductIndexPage extends Component {
       products: [newProduct, ...products]
     })
   }
-  deleteProduct (event) {
+  deleteProduct(event) {
     event.preventDefault();
-    console.log("This is it!");
-    console.log("this",this);
-
+    const productId = parseInt(event.currentTarget.dataset.productId, 10);
+    console.log(productId)
+    const newProducts = this.state.products.filter(
+      product => product.id !== productId
+    );
+    this.setState({
+      products: newProducts
+    });
   }
+
   render() {
-    console.log(this.state.products);
+    // console.log(this.state.products);
     return (<div>
       <ProductForm
         onSubmit={this.addProduct}
@@ -47,7 +53,9 @@ class ProductIndexPage extends Component {
               */
               }
               <em>{product.seller.full_name}</em>
-              <button onClick = {this.deleteProduct}>Delete
+              <button
+                data-product-id={product.id}
+                onClick = {this.deleteProduct}>Delete
               </button>
             </li>);
           })
