@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ProductDetails from './ProductDetails';
 import ReviewList from './ReviewList';
-
+import ReviewDetails from './ReviewDetails';
 import productData from '../data/product';
 
 class ProductShowPage extends Component {
@@ -11,6 +11,26 @@ class ProductShowPage extends Component {
     this.state = {
       product: productData
     }
+    this.delete = this.delete.bind(this);
+    this.deleteReview = this.deleteReview.bind(this);
+  }
+
+  delete() {
+    this.setState({
+      product: {}
+    });
+  }
+
+  deleteReview (reviewId) {
+    const {product} = this.state;
+    const {reviews} = product;
+
+    this.setState({
+      product: {
+        ...product,
+        reviews: reviews.filter(review => review.id !== reviewId)
+      }
+    })
   }
 
   render() {
@@ -29,7 +49,10 @@ class ProductShowPage extends Component {
     return (<div>
       <ProductDetails {...product}/>
       <h2>Reviews</h2>
-      <ReviewList reviews={reviews}/>
+      <ReviewList
+        reviews={reviews}
+        onReviewDeleteClick = {this.deleteReview}
+      />
     </div>)
 
   }

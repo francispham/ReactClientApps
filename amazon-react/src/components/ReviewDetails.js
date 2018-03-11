@@ -2,6 +2,7 @@ import React from 'react';
 import StarRating from './StarRating';
 
 function ReviewDetails (props) {
+
   // 1em is equal to the font size of the parent tag.
   const style = {
     borderLeft: 'medium solid black',
@@ -9,10 +10,13 @@ function ReviewDetails (props) {
   };
 
   const {
+    id,
     body,
     rating,
     created_at,
-    reviewer = {} } = props;
+    reviewer = {},
+    onDeleteClick = () => {}
+    } = props;
 
   const {full_name} = reviewer;
 
@@ -22,10 +26,17 @@ function ReviewDetails (props) {
       className="ReviewDetails"
       style={style}
     >
-      <p>Rating: {rating}</p>
+      {/* <p>Rating: {rating}</p> */}
       <StarRating max={5} rating = {rating}/>
-      <p>{body}</p>
-      <p>{full_name}</p>
+      <p><strong>Review:</strong> {body}</p>
+      <p>
+        <strong>{full_name}</strong>
+        <button
+          onClick={
+            () => onDeleteClick(props.id
+            )}> Delete
+        </button>
+      </p>
       <p>{created_at}</p>
 
 
