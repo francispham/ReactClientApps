@@ -2,19 +2,34 @@ import React, {Component} from 'react';
 import ProductDetails from './ProductDetails';
 import ReviewList from './ReviewList';
 import ReviewDetails from './ReviewDetails';
-import productData from '../data/product';
+import {Product} from '../data/requests';
 
 class ProductShowPage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      product: productData
+      product: {},
+      loading: true
     }
     this.delete = this.delete.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
   }
 
+  componentDidMount () {
+    const productId = this.props.match.params.id;
+
+    Product
+      .one(productId)
+      .then(
+        product => {
+          this.setState({
+            product: product,
+            loading: false
+          })
+        }
+      )
+  }
   delete() {
     this.setState({
       product: {}
@@ -46,6 +61,22 @@ class ProductShowPage extends Component {
     //   seller: this.state.product.seller,
     //   created_at: this.state.product.created_at
     // };
+    const {loading} = this.state;
+
+    if (loading) {
+      return (
+        <main
+          className="QuestionShowPage"
+          style={{
+            margin: '0 1rem'
+          }}
+        >
+          <h4>Loading...</h4>
+        </main>
+      );
+    }
+
+
     return (<div>
       <ProductDetails {...product}/>
       <h2>Reviews</h2>
