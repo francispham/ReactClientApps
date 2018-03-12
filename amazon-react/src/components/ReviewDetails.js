@@ -14,11 +14,12 @@ function ReviewDetails (props) {
     body,
     rating,
     created_at,
-    reviewer = {},
+    reviewer_full_name,
+    // reviewer = {},
     onDeleteClick = () => {}
     } = props;
 
-  const {full_name} = reviewer;
+  // const {full_name} = reviewer;
 
 
   return (
@@ -30,7 +31,7 @@ function ReviewDetails (props) {
       <StarRating max={5} rating = {rating}/>
       <p><strong>Review:</strong> {body}</p>
       <p>
-        <strong>{full_name}</strong>
+        <strong>Reviewer: </strong>{props.reviewer_full_name}
         <button
           onClick={
             () => onDeleteClick(props.id
