@@ -13,6 +13,7 @@ import QuestionIndexPage from './QuestionIndexPage';
 import QuestionNewPage from './QuestionNewPage';
 import SignInPage from './SignInPage';
 import NavBar from './NavBar';
+import AuthRoute from './AuthRoute'
 
 // When building React applications, we create
 // a root component that is the ancestor to all the
@@ -43,38 +44,55 @@ class App extends Component {
     }
   }
 
-  render () {
-   const { user } = this.state;
+  isSignedIn () {
+  // !! to convert this.state.user into a boolean.
+  return !!this.state.user;
+}
 
-   return (
-     <Router>
-       <div className="App">
-         <NavBar user={user} />
-         {/*
-           When wrapping routes inside of a Switch component,
-           only the first Route that matches will be rendered.
-         */}
-         <Switch>
-           <Route exact path="/questions" component={QuestionIndexPage} />
-           <Route path="/questions/new" component={QuestionNewPage} />
-           <Route path="/questions/:id" component={QuestionShowPage} />
-           {/* <Route path="/sign_in" component={SignInPage} /> */}
-           <Route
-             path="/sign_in"
-             render={
-               props => (
-                 <SignInPage
-                   {...props}
-                   onSignIn={this.signIn}
-                 />
-               )
-             }
-           />
-         </Switch>
-       </div>
-     </Router>
-   )
- }
+render () {
+ const { user } = this.state;
+
+ return (
+   <Router>
+     <div className="App">
+       <NavBar user={user} />
+       {/*
+         When wrapping routes inside of a Switch component,
+         only the first Route that matches will be rendered.
+       */}
+       <Switch>
+         <AuthRoute
+           isAuthenticated={this.isSignedIn()}
+           exact
+           path="/questions" component={QuestionIndexPage}
+         />
+         <AuthRoute
+           isAuthenticated={this.isSignedIn()}
+           path="/questions/new"
+           component={QuestionNewPage}
+         />
+         <AuthRoute
+           isAuthenticated={this.isSignedIn()}
+           path="/questions/:id"
+           component={QuestionShowPage}
+         />
+         {/* <Route path="/sign_in" component={SignInPage} /> */}
+         <Route
+           path="/sign_in"
+           render={
+             props => (
+               <SignInPage
+                 {...props}
+                 onSignIn={this.signIn}
+               />
+             )
+           }
+         />
+       </Switch>
+     </div>
+   </Router>
+ )
+}
 }
 
 export default App;
