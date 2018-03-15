@@ -7,6 +7,7 @@ import ProductIndexPage from './ProductIndexPage';
 import ProductNewPage from './ProductNewPage';
 import SignInPage from './SignInPage';
 import NavBar from './NavBar';
+import AuthRoute from './AuthRoute';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends Component {
       user: null
     };
     this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
   }
 
   componentWillMount() {
@@ -31,16 +33,44 @@ class App extends Component {
       });
     }
   }
+
+  signOut() {
+    localStorage.removeItem('jwt');
+    this.setState( {
+      user: null
+    });
+  }
+
+  isSignedIn () {
+    return !!this.state.user;
+  }
+
+
   render() {
     const { user } = this.state;
+
     return (
       <Router>
         <div className="App">
-          <NavBar user={user} />
+          <NavBar user={user}
+           onSignOut = {this.signOut}
+         />
           <Switch>
-            <Route exact path="/products" component={ProductIndexPage} />
-            <Route path="/products/new" component={ProductNewPage} />
-            <Route path="/products/:id" component={ProductShowPage} />
+            <AuthRoute
+              isAuthenticated = {this.isSignedIn ()}
+               exact path="/products" component={ProductIndexPage}
+             />
+
+            <AuthRoute
+              isAuthenticated = {this.isSignedIn ()}
+               path="/products/new" component={ProductNewPage}
+             />
+
+            <AuthRoute
+              isAuthenticated = {this.isSignedIn ()}
+               path="/products/:id" component={ProductShowPage}
+             />
+
             <Route
               path="/sign_in"
               render={props => <SignInPage {...props} onSignIn={this.signIn} />}
