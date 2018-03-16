@@ -1,4 +1,5 @@
 import React from 'react';
+import FormErrors from './FormErrors';
 
 function ProductForm(props) {
   // We are defining the `onSubmit` variable to have the value of the
@@ -10,7 +11,7 @@ function ProductForm(props) {
   // However, if it has the value of an empty function, then it won't throw an
   // error when it is called as a function (instead, it executes and does
   // nothing)
-  const {onSubmit = () => {}} = props
+  const {errors = [],onSubmit = () => {}} = props
   // Another way of writing the same thing
   // function emptyFunction() {}
   // const onSubmit = props.onSubmit || emptyFunction;
@@ -36,16 +37,19 @@ function ProductForm(props) {
         <div>
           <label htmlFor="title">Title</label> <br />
           <input name="title" id="title" />
+          <FormErrors forField="title" errors={errors} />
         </div>
 
         <div>
           <label htmlFor="price">Price</label> <br />
           <input name="price" id="price" />
+          <FormErrors forField="price" errors={errors} />
         </div>
 
         <div>
           <label htmlFor="description">Descrition</label> <br />
           <textarea name="description" id="description" cols="60" rows="4" />
+          <FormErrors forField="description" errors={errors} />
         </div>
 
         <div>

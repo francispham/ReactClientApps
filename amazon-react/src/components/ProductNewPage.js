@@ -5,6 +5,11 @@ import { Product } from '../data/requests';
 class ProductNewPage extends Component {
   constructor (props) {
     super (props);
+
+    this.state = {
+      validationErrors: []
+    };
+
     this.createProduct = this.createProduct.bind(this);
   }
 
@@ -12,11 +17,22 @@ class ProductNewPage extends Component {
     Product
       .create(productParams)
       .then (data => {
-        const {id} =data;
-        this.props.history.push(`/questions/${id}`);
+        if (data.errors) {
+          console.log(data.errors)
+          this.setState({
+            validationErrors: data
+              .errors
+              .filter(
+                e => e.type === "ActiveRecord::RecordInvalid"
+              )
+          });
+        } else {
+          const {id} =data;
+          this.props.history.push(`/questions/${id}`);
+        }
       })
   }
-  
+
   render () {
     return (
       <main
@@ -25,6 +41,7 @@ class ProductNewPage extends Component {
       >
         <h1>New Product</h1>
         <ProductForm
+          errors = {this.state.validationErrors}
           onSubmit={this.createProduct}
         />
       </main>

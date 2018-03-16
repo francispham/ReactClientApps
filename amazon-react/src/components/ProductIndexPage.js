@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 // import productsData from '../data/products';
-import ProductForm from './ProductForm';
 import {Product} from '../data/requests'
 
 class ProductIndexPage extends Component {
@@ -12,6 +11,7 @@ class ProductIndexPage extends Component {
       products: []
     };
     this.deleteProduct = this.deleteProduct.bind(this)
+    
   }
 
   componentDidMount () {

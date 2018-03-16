@@ -29,11 +29,14 @@ function NavBar(props) {
         <a key = "2" href = "/sign_out" onClick = {handleSignOut}>
           Sign Out
         </a>
-      ) : (
-        <NavLink exact to="/sign_in">
+      ) : [
+        <NavLink key="1" exact to="/sign_in">
           Sign In
+        </NavLink>,
+        <NavLink key="2" exact to="/sign_up">
+          Sign Up
         </NavLink>
-      )}
+      ]}
     </nav>
   );
 }

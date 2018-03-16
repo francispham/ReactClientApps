@@ -6,6 +6,9 @@ import ProductShowPage from './ProductShowPage';
 import ProductIndexPage from './ProductIndexPage';
 import ProductNewPage from './ProductNewPage';
 import SignInPage from './SignInPage';
+import SignUpPage from './SignUpPage';
+import NotFoundPage from './NotFoundPage';
+import Home from './Home';
 import NavBar from './NavBar';
 import AuthRoute from './AuthRoute';
 
@@ -56,6 +59,7 @@ class App extends Component {
            onSignOut = {this.signOut}
          />
           <Switch>
+            <Route exact path="/" component={Home} />
             <AuthRoute
               isAuthenticated = {this.isSignedIn ()}
                exact path="/products" component={ProductIndexPage}
@@ -75,6 +79,11 @@ class App extends Component {
               path="/sign_in"
               render={props => <SignInPage {...props} onSignIn={this.signIn} />}
             />
+            <Route
+              path="/sign_up"
+              render={props => <SignUpPage {...props} onSignUp={this.signIn} />}
+            />
+            <Route component={NotFoundPage} />
           </Switch>
         </div>
       </Router>

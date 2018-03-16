@@ -1,7 +1,10 @@
 const DOMAIN = 'localhost:3000';
 const API_PREFIX = '/api/v1';
 const BASE_URL = `http://${DOMAIN}${API_PREFIX}`;
-const JWT = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3RfbmFtZSI6IkpvbiIsImxhc3RfbmFtZSI6IlNub3ciLCJmdWxsX25hbWUiOiJKb24gU25vdyIsImV4cCI6MTUyMDk1NzYxOH0.dSoBbHOmK0AJl0me8AY_kPBlh3aBnHWW-QNxd0Vmoac';
+
+function getJWT() {
+  return localStorage.getItem('jwt');
+}
 
 
 // HTTP REQUESTS
@@ -10,21 +13,21 @@ const Product = {
   all() {
     return fetch(`${BASE_URL}/products`, {
       headers: {
-        Authorization: JWT
+        Authorization: getJWT()
       }
     }).then(res => res.json());
   },
   one(id) {
     return fetch(`${BASE_URL}/products/${id}`, {
       headers: {
-        Authorization: JWT
+        Authorization: getJWT()
       }
     }).then(res => res.json());
   },
   create(params) {
     return fetch(`${BASE_URL}/products`, {
       headers: {
-        Authorization: JWT,
+        Authorization: getJWT(),
         'Content-Type': 'application/json'
       },
       method: 'POST',
@@ -51,4 +54,22 @@ const Token = {
   }
 };
 
-export { Product, Token };
+const User = {
+  create(params) {
+    return fetch(`${BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user: params })
+    }).then(res => {
+      if (res.status ===200) {
+        return res.json();
+      } else {
+        return { error: 'Could not create the user'};
+      }
+    });
+  }
+}
+
+export { Product, Token, User };
