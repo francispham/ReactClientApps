@@ -31,63 +31,39 @@ class App extends Component {
 
     if (jwt) {
       const payload = jwtDecode(jwt);
-      this.setState({
-        user: payload
-      });
+      this.setState({user: payload});
     }
   }
 
   signOut() {
     localStorage.removeItem('jwt');
-    this.setState( {
-      user: null
-    });
+    this.setState({user: null});
   }
 
-  isSignedIn () {
+  isSignedIn() {
     return !!this.state.user;
   }
 
-
   render() {
-    const { user } = this.state;
+    const {user} = this.state;
 
-    return (
-      <Router>
-        <div className="App">
-          <NavBar user={user}
-           onSignOut = {this.signOut}
-         />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <AuthRoute
-              isAuthenticated = {this.isSignedIn ()}
-               exact path="/products" component={ProductIndexPage}
-             />
+    return (<Router>
+      <div className="App">
+        <NavBar user={user} onSignOut={this.signOut}/>
+        <Switch>
+          <Route exact="exact" path="/" component={Home}/>
+          <AuthRoute isAuthenticated={this.isSignedIn()} exact="exact" path="/products" component={ProductIndexPage}/>
 
-            <AuthRoute
-              isAuthenticated = {this.isSignedIn ()}
-               path="/products/new" component={ProductNewPage}
-             />
+          <AuthRoute isAuthenticated={this.isSignedIn()} path="/products/new" component={ProductNewPage}/>
 
-            <AuthRoute
-              isAuthenticated = {this.isSignedIn ()}
-               path="/products/:id" component={ProductShowPage}
-             />
+          <AuthRoute isAuthenticated={this.isSignedIn()} path="/products/:id" component={ProductShowPage}/>
 
-            <Route
-              path="/sign_in"
-              render={props => <SignInPage {...props} onSignIn={this.signIn} />}
-            />
-            <Route
-              path="/sign_up"
-              render={props => <SignUpPage {...props} onSignUp={this.signIn} />}
-            />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </div>
-      </Router>
-    );
+          <Route path="/sign_in" render={props => <SignInPage {...props} onSignIn={this.signIn}/>}/>
+          <Route path="/sign_up" render={props => <SignUpPage {...props} onSignUp={this.signIn}/>}/>
+          <Route component={NotFoundPage}/>
+        </Switch>
+      </div>
+    </Router>);
   }
 }
 

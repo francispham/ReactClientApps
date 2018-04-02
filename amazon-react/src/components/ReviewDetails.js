@@ -18,10 +18,7 @@ function ReviewDetails (props) {
     // reviewer = {},
     onDeleteClick = () => {}
     } = props;
-
   // const {full_name} = reviewer;
-
-
   return (
     <div
       className="ReviewDetails"

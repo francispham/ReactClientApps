@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import jwtDecode from 'jwt-decode';
 import {
   // When doing named imports, you can `as` to rename
@@ -23,7 +23,7 @@ import AuthRoute from './AuthRoute';
 // component on the page with `ReactDOM.render()`.
 // For this application, the `App` serves that role.
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -34,84 +34,54 @@ class App extends Component {
     this.signOut = this.signOut.bind(this);
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.signIn();
   }
 
-  signIn () {
-    const jwt =  localStorage.getItem('jwt');
+  signIn() {
+    const jwt = localStorage.getItem('jwt');
 
     if (jwt) {
       const payload = jwtDecode(jwt);
-      this.setState({
-        user: payload
-      });
+      this.setState({user: payload});
     }
   }
 
-  signOut () {
+  signOut() {
     localStorage.removeItem('jwt');
     this.setState({user: null});
   }
 
-  isSignedIn () {
+  isSignedIn() {
     // !! to convert this.state.user into a boolean.
     return !!this.state.user;
   }
 
-  render () {
-    const { user } = this.state;
+  render() {
+    const {user} = this.state;
 
-    return (
-      <Router>
-        <div className="App">
-          <NavBar
-            user={user}
-            onSignOut={this.signOut}
-          />
-          {/*
+    return (<Router>
+      <div className="App">
+        <NavBar user={user} onSignOut={this.signOut}/> {/*
             When wrapping routes inside of a Switch component,
             only the first Route that matches will be rendered.
-          */}
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <AuthRoute
-              isAuthenticated={this.isSignedIn()}
-              exact
-              path="/questions" component={QuestionIndexPage}
-            />
-            <AuthRoute
-              isAuthenticated={this.isSignedIn()}
-              path="/questions/new"
-              component={QuestionNewPage}
-            />
-            <AuthRoute
-              isAuthenticated={this.isSignedIn()}
-              path="/questions/:id"
-              component={QuestionShowPage}
-            />
-            {/* <Route path="/sign_in" component={SignInPage} /> */}
-            <Route
-              path="/sign_in"
-              render={
-                props => (
-                  <SignInPage
-                    {...props}
-                    onSignIn={this.signIn}
-                  />
-                )
-              }
-            />
-            {/*
+          */
+        }
+        <Switch>
+          <Route exact="exact" path="/" component={HomePage}/>
+          <AuthRoute isAuthenticated={this.isSignedIn()} exact="exact" path="/questions" component={QuestionIndexPage}/>
+          <AuthRoute isAuthenticated={this.isSignedIn()} path="/questions/new" component={QuestionNewPage}/>
+          <AuthRoute isAuthenticated={this.isSignedIn()} path="/questions/:id" component={QuestionShowPage}/> {/* <Route path="/sign_in" component={SignInPage} /> */}
+          <Route path="/sign_in" render={props => (<SignInPage {...props} onSignIn={this.signIn}/>)}/> {/*
               To match all routes that aren't matched in a Switch
               component, create a Route without a path prop. It's a
               good way to implement a 404 not found page.
-             */}
-            <Route component={NotFoundPage} />
-          </Switch>
-        </div>
-      </Router>
-    )
+             */
+          }
+          <Route component={NotFoundPage}/>
+        </Switch>
+      </div>
+    </Router>)
   }
 }
 

@@ -23,6 +23,7 @@ class ProductShowPage extends Component {
       .one(productId)
       .then(
         product => {
+          console.log(product)
           this.setState({
             product: product,
             loading: false
